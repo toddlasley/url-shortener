@@ -1,0 +1,27 @@
+<div id="usf-container">
+    <p>
+        Please enter a URL to shorten.
+    </p>
+    <form [formGroup]="form" *ngIf="!!form">
+        <div id="usf-form-field-row">
+            <mat-form-field id="usf-url-form-field" appearance="fill">
+                <mat-label>URL*</mat-label>
+                <input id="usf-url-input" matInput [errorStateMatcher]="errorStateMatcher" [formControl]="form.get('url')" type="text" novalidate>
+                <mat-hint [ngClass]="{ 'error-text': formControlHasError('url') }">Required*</mat-hint>
+                <mat-error *ngIf="form.get('url').hasError('pattern')">Please provide a valid URL</mat-error>
+            </mat-form-field>
+            <button id="usf-form-button" mat-raised-button color="primary" (click)="createShortenedUrl()" [disabled]="form.invalid">Shorten!</button>
+        </div>
+    </form>
+
+    <div id="usf-url-collection">
+        <div id="usf-shortened-url-row-{{i}}" *ngFor="let url of shortenedUrls; let i = index" class="url-row">
+            <span>
+                {{url.url.length > 65 ? url.url.substring(0, 65) + '...' : url.url}}
+            </span>
+            <span class="shortened-url">
+                {{APP_DOMAIN + '/' + url.slug}}
+            </span>
+        </div>
+    </div>
+</div>

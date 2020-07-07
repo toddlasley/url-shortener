@@ -1,0 +1,54 @@
+The only external requirement you should hopefully need to build, run, and test the application
+is to have the LTS version of Node and npm installed. I've never set up my own Makefile
+and I built this solution on a Windows machine so I apologize for any issues that may arise
+due to these circumstances.
+
+I chose the technologies that I did only because they are what I have worked with recently
+with regards to web development. The app architecture is very simplistic and not very scalable
+but the app isn't incredibly feature rich so it seems fitting for now. I go into some of my
+architecture decision-making later but my only regret is not containerizing this solution,
+making it a bit painful to deploy. But I feel that the Makefile serves as a sufficient building
+mechanism for the time being.
+
+Front-end: Angular
+    Application front-end is built with Angular which is pretty overkill for this
+    exercise but there are some built-in features that I wanted to utilize and try
+    to make the experience somewhat spiffy. (Sorry for the lengthy build times if you can
+    even get it to build.)
+
+Back-end: Node.js & Express.js written in TypeScript
+    The back-end currently stores URLs along with their slug in a Map object
+    that is managed in UrlService. We would obviously want something more persistent
+    in a real situation but I felt this would be sufficient for functionality/demo purposes.
+    The data could easily be persisted in a relational database but it would be more
+    beneficial to utilize something that offers fast hash-based lookups. I think a 
+    product like Redis offers something along these lines but, seeing as how I don't
+    have any experience with that technology, I feel it would be inappropriate to attempt
+    to learn it now. I think such a product would essentially give us URL fetches that run in
+    constant time, which is what I ~should~ have with my current Map implementation,
+    minus the data persistence of course. I understand that the Evaluation mentions using a persistent
+    data storage method, but I'm afraid I don't have much experience creating instances that
+    that can easily and readily be built and stood up in an environment such as this, not to mention
+    the lack of experience in particular technologies that may be perfect for something like this
+    (like Redis perhaps). Hopefully my input on what would be ideal so far has been somewhat acceptable.
+
+    The back-end is also responsible for serving the web app to the browser. Ideally,
+    these would be served from different hosts (containers even more preferably even if I
+    didn't take the time to set them/one up) so that our front-end and back-end concerns would
+    be separated and we could horizontally scale each as needed. The requirements suggested
+    that both the app and the slug-to-URL resolution be served from the same domain so this
+    is what I came up with. I supposed I could have served the instances separately and have the
+    web app retrieve the actual URL based on the slug provided and then redirect from the client,
+    but I think it would be a bit convoluted to have to render the app, request the data, and 
+    then redirect with that implementation.
+
+Running the app:
+    Per the instructions you should hopefully just have to run the Makefile commands:
+        make setup
+        make server
+    Navigate to http://localhost:8080 to load the app in browser
+
+Testing the app:
+    Run 'make setup' if you haven't already and then:
+        make test
+    

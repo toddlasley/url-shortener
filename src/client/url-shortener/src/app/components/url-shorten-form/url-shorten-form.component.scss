@@ -1,0 +1,45 @@
+div#usf-container {
+    form {
+        div#usf-form-field-row {
+            display: block;
+            position: relative;
+    
+            mat-form-field#usf-url-form-field {
+                width: 75%;
+
+                .error-text {
+                    color: red;
+                }
+            }
+    
+            button#usf-form-button {
+                position: absolute;
+                top: 8px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    div#usf-url-collection {
+        div.url-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            width: 75%;
+
+            @media screen and (max-width: 800px) {
+                display: block;
+            }
+
+            span {
+                &.shortened-url {
+                    color: purple;
+                }
+
+                @media screen and (max-width: 800px) {
+                    display: block;
+                }
+            }
+        }
+    }
+}
